@@ -1,0 +1,30 @@
+.navbar-brand img {
+  width: 35px;
+}
+
+header {
+  text-align: center;
+  color: #fff;
+  background: #18bc9c;
+}
+
+#profile-pic {
+  border-radius: 50%;
+}
+
+hr.hr-code {
+  opacity: 1;
+  margin: 25px auto 30px;
+  max-width: 300px;
+  border-top: solid 3px #fff;
+  overflow: visible;
+}
+hr.hr-code:after {
+  background-color: #18bc9c;
+  content: "\f121";
+  position: relative;
+  top: -0.8em;
+  padding: 0 0.25em;
+  font-family: FontAwesome;
+  font-size: 2em;
+}
