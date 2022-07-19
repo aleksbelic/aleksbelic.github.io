@@ -1,30 +1,119 @@
+@font-face {
+  font-family: 'Pixel';
+  src: url('/assets/font/PressStart2P-Regular.ttf');
+}
+@font-face {
+  font-family: 'Amatic';
+  src: url('/assets/font/AmaticSC-Regular.ttf');
+}
+@font-face {
+  font-family: 'Lobster';
+  src: url('/assets/font/Lobster-Regular.ttf');
+}
+.lobster-font {
+  font-family: 'Lobster', cursive;
+}
+.handwritten-font {
+  font-family: 'Amatic', coursive;
+}
+
+nav {
+  background-color: transparent;
+}
+
+a.nav-link.active {
+  background-color: #233140;
+}
+
+.navbar-brand {
+  color: #f5f5dc;
+  text-shadow: 2px 2px 4px #000;
+}
+
 .navbar-brand img {
-  width: 35px;
+  width: 2em;
+}
+
+.nav-link {
+  color: #f5f5dc;
+}
+
+.nav-item {
+  font-size: 2rem;
+  color: #f5f5dc;
+  text-shadow: 2px 2px 4px #000;
+}
+
+img.shadow {
+  box-shadow: 0 10px 16px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%) !important;
 }
 
 header {
+  padding-top: 8em;
+  padding-bottom: 2em;
   text-align: center;
   color: #fff;
-  background: #18bc9c;
+  background-color: #2aa5a5;
 }
-
-#profile-pic {
+header #profile-pic {
   border-radius: 50%;
+  margin-bottom: 40px;
+}
+header #name {
+  font-size: 5em;
+  color: #f5f5dc;
+  text-shadow: 2px 2px 4px #000;
+}
+header hr.hr-code {
+  border-top-color: #f5f5dc;
+}
+header #skills {
+  font-size: 3em;
+  color: #f5f5dc;
+  text-shadow: 2px 2px 4px #000;
 }
 
 hr.hr-code {
   opacity: 1;
   margin: 25px auto 30px;
-  max-width: 300px;
-  border-top: solid 3px #fff;
+  max-width: 230px;
+  border-top: solid 3px #f5f5dc;
   overflow: visible;
 }
 hr.hr-code:after {
-  background-color: #18bc9c;
-  content: "\f121";
+  color: #f5f5dc;
+  background-color: #2aa5a5;
+  content: '\f121';
   position: relative;
   top: -0.8em;
   padding: 0 0.25em;
   font-family: FontAwesome;
   font-size: 2em;
+}
+
+@media (min-width: 768px) {
+  .navbar.fixed-top {
+    padding: 1em 0;
+    transition: padding 0.3s;
+  }
+
+  .navbar.fixed-top .navbar-brand {
+    font-size: 2em;
+    transition: all 0.3s;
+  }
+
+  .navbar.fixed-top.navbar-shrink {
+    padding: 0;
+    background-color: teal;
+    transition: background-color 0.3s;
+    box-shadow: 0 6px 10px rgb(0 0 0 / 30%);
+  }
+
+  .navbar.fixed-top.navbar-shrink .navbar-brand {
+    font-size: 1.5em;
+  }
+
+  header {
+    padding-top: 9em;
+  }
 }
