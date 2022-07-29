@@ -1,8 +1,8 @@
-let animatedNavbar = (() => {
+const animatedNavbar = (() => {
 
-  let navbarElem = document.querySelector('.navbar.fixed-top'),
-    didScroll = false,
-    shrinkNavbarOnPx = 150;
+  let navbarElem = document.querySelector('.navbar.fixed-top');
+  let didScroll = false;
+  let shrinkNavbarOnPx = 150;
 
   function init() {
     window.addEventListener('scroll', (e) => {
@@ -10,7 +10,7 @@ let animatedNavbar = (() => {
         didScroll = true;
         setTimeout(scrollPage, 100);
       }
-    }, false);
+    });
   }
 
   function scrollPage() {
