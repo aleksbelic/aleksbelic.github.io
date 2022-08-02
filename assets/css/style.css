@@ -48,20 +48,15 @@ img.shadow {
   box-shadow: 0 10px 16px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%) !important;
 }
 
-section {
-  padding-top: 5rem;
-}
-
-section#contact {
-  padding-bottom: 5rem;
+header,
+#portfolio {
+  color: #fff;
+  background-color: #2aa5a5;
 }
 
 header {
   padding-top: 8em;
-  padding-bottom: 2em;
   text-align: center;
-  color: #fff;
-  background-color: #2aa5a5;
 }
 header #profile-pic {
   border-radius: 50%;
@@ -79,6 +74,15 @@ header #skills {
   font-size: 3em;
   color: #f5f5dc;
   text-shadow: 2px 2px 4px #000;
+}
+
+h1 {
+  text-decoration: dotted underline;
+}
+
+section {
+  padding-top: 5em;
+  padding-bottom: 4em;
 }
 
 hr.hr-code {
@@ -124,6 +128,10 @@ hr.hr-code:after {
   header {
     padding-top: 9em;
   }
+}
+
+#contact i.bi {
+  font-size: 3.5rem;
 }
 
 footer {
