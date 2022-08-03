@@ -1,8 +1,4 @@
 @font-face {
-  font-family: 'Pixel';
-  src: url('/assets/font/PressStart2P-Regular.ttf');
-}
-@font-face {
   font-family: 'Amatic';
   src: url('/assets/font/AmaticSC-Regular.ttf');
 }
@@ -17,8 +13,17 @@
   font-family: 'Amatic', coursive;
 }
 
+body {
+  text-align: justify;
+  color: #233140;
+}
+
 nav {
   background-color: transparent;
+}
+.nav-link:focus,
+.nav-link:hover {
+  color: #bf2832;
 }
 
 a.nav-link.active {
@@ -35,10 +40,6 @@ a.nav-link.active {
 }
 
 .nav-link {
-  color: #f5f5dc;
-}
-
-.nav-item {
   font-size: 2rem;
   color: #f5f5dc;
   text-shadow: 2px 2px 4px #000;
@@ -48,15 +49,15 @@ img.shadow {
   box-shadow: 0 10px 16px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%) !important;
 }
 
-header,
-#portfolio {
-  color: #fff;
-  background-color: #2aa5a5;
-}
-
 header {
   padding-top: 8em;
   text-align: center;
+  text-shadow: 2px 2px 4px #000;
+}
+header,
+#portfolio {
+  color: #f5f5dc;
+  background-color: #2aa5a5;
 }
 header #profile-pic {
   border-radius: 50%;
@@ -64,43 +65,33 @@ header #profile-pic {
 }
 header #name {
   font-size: 5em;
-  color: #f5f5dc;
-  text-shadow: 2px 2px 4px #000;
 }
-header hr.hr-code {
-  border-top-color: #f5f5dc;
+header #binary-divider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-header #skills {
-  font-size: 3em;
-  color: #f5f5dc;
-  text-shadow: 2px 2px 4px #000;
+header #binary-divider span {
+  border-top: 1px solid #f5f5dc;
+  min-width: 10%;
+  box-shadow: 2px 2px 4px #000;
+  padding: 0 2% 0 2%;
+}
+header #binary-divider i {
+  padding: 0 1% 0 1%;
 }
 
-h1 {
-  text-decoration: dotted underline;
+header #skills {
+  font-size: 3em;
 }
 
 section {
-  padding-top: 5em;
-  padding-bottom: 4em;
+  padding-top: 5rem;
+  padding-bottom: 4rem;
 }
-
-hr.hr-code {
-  opacity: 1;
-  margin: 25px auto 30px;
-  max-width: 230px;
-  border-top: solid 3px #f5f5dc;
-  overflow: visible;
-}
-hr.hr-code:after {
-  color: #f5f5dc;
-  background-color: #2aa5a5;
-  content: '\f121';
-  position: relative;
-  top: -0.8em;
-  padding: 0 0.25em;
-  font-family: FontAwesome;
-  font-size: 2em;
+section h1 {
+  padding-bottom: 2rem;
+  text-decoration: dotted underline;
 }
 
 @media (min-width: 768px) {
@@ -132,6 +123,28 @@ hr.hr-code:after {
 
 #contact i.bi {
   font-size: 3.5rem;
+  padding: 0 0.4rem 0 0.4rem;
+}
+#contact a {
+  text-decoration: none;
+  color: unset;
+  transition: color 0.3s ease-in-out;
+}
+#contact a:hover {
+  color: #e7294f;
+}
+#contact #email {
+  text-decoration: none;
+  font-weight: bold;
+  color: #2aa5a5;
+  box-shadow: inset 0 0 0 0 #2aa5a5;
+  margin: 0 -0.25rem;
+  padding: 0 0.25rem;
+  transition: color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+#contact #email:hover {
+  box-shadow: inset 265px 0 0 0 #2aa5a5;
+  color: #f5f5dc;
 }
 
 footer {
