@@ -1,7 +1,7 @@
 const animatedNavbar = (() => {
   let navbarElem = document.querySelector('#navbar');
   let didScroll = false;
-  let shrinkNavbarBoundary = 150; // px
+  let shrinkNavbarBoundary = 100; // px
 
   function init() {
     window.addEventListener('scroll', (e) => {

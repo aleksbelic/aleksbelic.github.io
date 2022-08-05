@@ -89,6 +89,18 @@ document.addEventListener('DOMContentLoaded', () => {
     copyPgpKeyToClipboardElem.blur();
   });
 
+  // auto-close menu on select
+  document.querySelectorAll('nav a.nav-link').forEach((navLink) => {
+    navLink.addEventListener('click', () => {
+      let hamburgerMenuBtn = document.querySelector(
+        'button.navbar-toggler[aria-expanded="true"]'
+      );
+      if (hamburgerMenuBtn !== null) {
+        hamburgerMenuBtn.click();
+      }
+    });
+  });
+
   // lil fucker
   let consoleNoseyLilFuckerStyle1 =
     'background-color: black; color: white; font-weight: bold; padding: 5px; border-radius: 5px;';
