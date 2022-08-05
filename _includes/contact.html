@@ -1,8 +1,9 @@
 <section id="contact">
   <div class="container text-center">
+
     <h1 class="display-3 lobster-font">Contact</h1>
 
-    <p><i>Social</i></p>
+    <p class="mt-3 mb-3"><i>Social</i></p>
     <a href="https://github.com/aleksbelic" target="_blank" title="GitHub">
       <i class="bi bi-github"></i>
     </a>
@@ -13,32 +14,83 @@
       <i class="bi bi-linkedin"></i>
     </a>
 
-    <br><br>
-    <p><i>or</i></p>
-
+    <p class="mt-3 mb-3"><i>or</i></p>
     <p>feel free to drop me an email at</p>
 
-    <div class="input-group d-flex justify-content-center mb-5">
+    <div id="email-btn-group" class="input-group d-flex justify-content-center mb-5">
 
-      <input type="text" id="email" class="form-control" value="aleks.belic@gmail.com">
-      <button class="btn btn-outline-secondary" type="button" id="send-email" title="Send email"
-        onclick="javascript:linkTo_UnCryptMailto('nbjmup;bmflt/cfmjdAhnbjm/dpn');">
+      <input type="email" id="email" class="form-control fs-5">
+      <button class="btn btn-outline-secondary" type="button" id="send-email" data-bs-toggle="tooltip"
+        data-bs-title="Send email" data-bs-placement="bottom"
+        onclick="javascript:linkToUncryptMailto('pdlowr=dohnv1eholfCjpdlo1frp');">
         <i class="bi bi-envelope-heart fs-4"></i>
       </button>
-      <button class="btn btn-outline-secondary" type="button" id="copy-e-mail-to-clipboard"
-        title="Copy email to clipboard">
+      <button class="btn btn-outline-secondary" type="button" id="copy-email-to-clipboard" data-bs-toggle="tooltip"
+        data-bs-title="Copy email to clipboard" data-bs-placement="bottom">
         <i class="bi bi-files fs-4"></i>
       </button>
-      <button class="btn btn-outline-secondary" type="button" id="copy-pgp-to-clipboard" title="Copy PGP to clipboard">
-        <i class="bi bi-fingerprint fs-4"></i>
+      <button class="btn btn-outline-secondary" type="button" id="copy-pgp-key-to-clipboard" data-bs-toggle="tooltip"
+        data-bs-title="Copy PGP key to clipboard" data-bs-placement="bottom">
+        <i class="bi bi-key fs-4"></i>
       </button>
 
     </div>
 
-    <!--
-    <a id="email" href="javascript:linkTo_UnCryptMailto('nbjmup;bmflt/cfmjdAhnbjm/dpn');"
-      class="fw-bold fs-4">aleks.belic@<span style="display:none;">eat-some-garbage-ya-filthy-bot</span>gmail.com</a>-->
-    </p>
-
   </div>
+
+  <pre id="pgp-key">
+    -----BEGIN PGP PUBLIC KEY BLOCK-----
+    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
+    rxZo7Q==
+    =VWqg
+    -----END PGP PUBLIC KEY BLOCK-----
+  </pre>
+
+
 </section>

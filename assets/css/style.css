@@ -43,7 +43,8 @@ a.nav-link {
   text-shadow: 2px 2px 4px #000;
   position: relative;
 }
-a.nav-link.active {
+.navbar a.nav-link.active {
+  color: #dcdc9a;
   background-color: #233140;
 }
 a.nav-link:focus,
@@ -171,18 +172,19 @@ section h1 {
   }
 }
 
-#contact i.bi {
+#contact a {
+  display: inline-block;
+  text-decoration: none;
   font-size: 3.5rem;
   padding: 0 0.4rem 0 0.4rem;
-  transition: color 0.15s ease-out;
+  transition: color 0.15s ease-out, transform 0.15s ease-out;
 }
-#contact a:hover i.bi {
+#contact a:hover {
   color: hotpink;
+  transform: scale(1.1);
 }
-
-#contact a {
-  text-decoration: none;
-  color: unset;
+#contact #email-btn-group button:focus {
+  box-shadow: none;
 }
 #contact #email {
   pointer-events: none;
@@ -191,6 +193,9 @@ section h1 {
   max-width: fit-content;
   text-align: center;
   transition: color 0.15s ease-out, background-color 0.15s ease-out;
+}
+#contact #pgp-key {
+  display: none;
 }
 
 footer {
