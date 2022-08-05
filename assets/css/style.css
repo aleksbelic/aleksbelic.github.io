@@ -21,16 +21,8 @@ body {
 nav {
   background-color: transparent;
 }
-.nav-link:focus,
-.nav-link:hover {
-  color: #bf2832;
-}
 
-a.nav-link.active {
-  background-color: #233140;
-}
-
-.navbar-brand {
+nav .navbar-brand {
   color: #f5f5dc;
   text-shadow: 2px 2px 4px #000;
 }
@@ -38,15 +30,39 @@ a.nav-link.active {
 .navbar-brand img {
   width: 2em;
 }
-
-.nav-link {
+.navbar-brand:hover img {
+  animation: ring 1s 0s ease-in-out;
+}
+a,
+a:hover {
+  color: unset;
+}
+a.nav-link {
   font-size: 2rem;
   color: #f5f5dc;
   text-shadow: 2px 2px 4px #000;
+  position: relative;
 }
-
-img.shadow {
-  box-shadow: 0 10px 16px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%) !important;
+a.nav-link.active {
+  background-color: #233140;
+}
+a.nav-link:focus,
+a.nav-link:hover,
+a.navbar-brand:hover {
+  color: #dcdc9a;
+}
+a.nav-link:before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  border-bottom: 6px solid #233140;
+  transform: scaleX(0);
+  transition: all 0.3s ease-in-out 0s;
+}
+a.nav-link:hover:before {
+  transform: scaleX(1);
 }
 
 header {
@@ -59,25 +75,59 @@ header,
   color: #f5f5dc;
   background-color: #2aa5a5;
 }
-header #profile-pic {
+header img#profile-pic {
   border-radius: 50%;
   margin-bottom: 40px;
+  position: relative;
+  box-shadow: 0 10px 16px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+  transition: box-shadow 0.1s;
+}
+
+.hover-sonar {
+  display: inline-block;
+  width: 256px;
+  height: 256px;
+  border-radius: 50%;
+  position: relative;
+  background: #ffffff1a;
+  transition: transform ease-out 0.2s;
+}
+.hover-sonar:after {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  content: '';
+  top: 0;
+  left: 0;
+  padding: 0;
+  opacity: 0;
+  color: transparent;
+}
+.hover-sonar:hover {
+  transform: scale(0.95);
+}
+.hover-sonar:hover:after {
+  animation: sonar 1.3s ease-out;
+}
+.hover-sonar:hover img#profile-pic {
+  box-shadow: none;
 }
 header #name {
   font-size: 5em;
 }
-header #binary-divider {
+header #code-divider {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-header #binary-divider span {
+header #code-divider span {
   border-top: 1px solid #f5f5dc;
   min-width: 10%;
   box-shadow: 2px 2px 4px #000;
   padding: 0 2% 0 2%;
 }
-header #binary-divider i {
+header #code-divider i {
   padding: 0 1% 0 1%;
 }
 
@@ -124,30 +174,94 @@ section h1 {
 #contact i.bi {
   font-size: 3.5rem;
   padding: 0 0.4rem 0 0.4rem;
+  transition: color 0.15s ease-out;
 }
+#contact a:hover i.bi {
+  color: hotpink;
+}
+
 #contact a {
   text-decoration: none;
   color: unset;
-  transition: color 0.3s ease-in-out;
-}
-#contact a:hover {
-  color: #e7294f;
 }
 #contact #email {
-  text-decoration: none;
+  pointer-events: none;
   font-weight: bold;
   color: #2aa5a5;
-  box-shadow: inset 0 0 0 0 #2aa5a5;
-  margin: 0 -0.25rem;
-  padding: 0 0.25rem;
-  transition: color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-}
-#contact #email:hover {
-  box-shadow: inset 265px 0 0 0 #2aa5a5;
-  color: #f5f5dc;
+  max-width: fit-content;
+  text-align: center;
+  transition: color 0.15s ease-out, background-color 0.15s ease-out;
 }
 
 footer {
-  color: #fff;
+  color: #f5f5dc;
   background-color: #233140;
+}
+
+/* ANIMATIONS */
+@keyframes ring {
+  0% {
+    transform: rotate(0) scale(1) skew(1deg);
+  }
+  10% {
+    transform: rotate(-25deg) scale(1) skew(1deg);
+  }
+  20% {
+    transform: rotate(25deg) scale(1) skew(1deg);
+  }
+  30% {
+    transform: rotate(-25deg) scale(1) skew(1deg);
+  }
+  40% {
+    transform: rotate(25deg) scale(1) skew(1deg);
+  }
+  50% {
+    transform: rotate(0) scale(1) skew(1deg);
+  }
+  100% {
+    transform: rotate(0) scale(1) skew(1deg);
+  }
+}
+@keyframes sonar {
+  0% {
+    opacity: 0.3;
+  }
+  40% {
+    opacity: 0.5;
+    box-shadow: 0 0 0 2px #ffffff1a, 0 0 10px 10px #f5f5dc, 0 0 0 10px #ffffff80;
+  }
+  100% {
+    box-shadow: 0 0 0 2px #ffffff1a, 0 0 10px 10px #f5f5dc, 0 0 0 10px #ffffff80;
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+@keyframes highlight {
+  to {
+    background-position: 0 0;
+  }
+}
+
+.highlight-pink,
+.highlight-dark {
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.highlight-pink a,
+.highlight-dark a,
+a.highlight-pink,
+a.highlight-dark {
+  color: unset;
+}
+.highlight-pink.visible {
+  animation: 1.5s highlight 1s 1 normal forwards;
+  background: linear-gradient(90deg, #ffc5e2 50%, #ffffff00 50%);
+  background-size: 200% 100%;
+  background-position: 100% 0;
+}
+.highlight-dark.visible {
+  animation: 1.5s highlight 1s 1 normal forwards;
+  background: linear-gradient(90deg, #233140 50%, #ffffff00 50%);
+  background-size: 200% 100%;
+  background-position: 100% 0;
 }
