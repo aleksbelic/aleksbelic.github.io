@@ -131,7 +131,7 @@ header img#profile-pic {
 }
 header #name {
   line-height: normal;
-  font-size: 17vmin;
+  font-size: calc(3rem + 3.3vw);
 }
 header #code-divider {
   display: flex;
@@ -291,7 +291,7 @@ a.highlight-dark {
     padding-top: 9em;
   }
   header #name {
-    font-size: 15vmin;
+    font-size: 6rem;
   }
 
   #contact #email {
