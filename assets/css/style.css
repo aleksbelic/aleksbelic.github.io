@@ -94,7 +94,6 @@ header,
 }
 header img#profile-pic {
   border-radius: 50%;
-  margin-bottom: 40px;
   position: relative;
   box-shadow: 0 10px 16px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
   transition: box-shadow 0.1s;
@@ -131,7 +130,8 @@ header img#profile-pic {
   box-shadow: none;
 }
 header #name {
-  font-size: 5em;
+  line-height: normal;
+  font-size: 17vmin;
 }
 header #code-divider {
   display: flex;
@@ -289,6 +289,9 @@ a.highlight-dark {
 
   header {
     padding-top: 9em;
+  }
+  header #name {
+    font-size: 15vmin;
   }
 
   #contact #email {
