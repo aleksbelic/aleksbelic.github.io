@@ -47,6 +47,12 @@ button.navbar-toggler:focus {
 .navbar-toggler-icon {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23f5f5dc' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
+.navbar.fixed-top.navbar-shrink {
+  padding: 0;
+  background-color: teal;
+  transition: background-color 0.3s;
+  box-shadow: 0 6px 10px rgb(0 0 0 / 30%);
+}
 
 #navbarSupportedContent {
   backdrop-filter: blur(10px);
@@ -161,11 +167,21 @@ section h1 {
   text-decoration: dotted underline;
 }
 
-.navbar.fixed-top.navbar-shrink {
-  padding: 0;
-  background-color: teal;
-  transition: background-color 0.3s;
-  box-shadow: 0 6px 10px rgb(0 0 0 / 30%);
+/* Personal interests chart */
+#my-current-interests-chart .ct-label {
+  fill: #000;
+  font-family: 'Amatic', coursive;
+  font-size: 1.9em;
+  font-weight: bold;
+}
+#my-current-interests-chart .ct-series-a path {
+  stroke: dimgray;
+}
+#my-current-interests-chart .ct-series-b path {
+  stroke: #f05b4f;
+}
+#my-current-interests-chart .ct-series-c path {
+  stroke: #f4c63d;
 }
 
 #contact a {
