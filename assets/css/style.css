@@ -213,6 +213,10 @@ section h1 {
   display: none;
 }
 
+section#footer {
+  padding: 0;
+}
+
 footer {
   color: #f5f5dc;
   background-color: #233140;
