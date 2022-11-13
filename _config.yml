@@ -6,6 +6,7 @@ url: '' # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: aleksbelic
 github_username: aleksbelic
 skills: 'Software Developer & Test Automation Specialist'
+blog_url: https://abelic.blogspot.com
 
 # Build settings
 #theme: minima
