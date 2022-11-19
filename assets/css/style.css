@@ -157,7 +157,7 @@ header #code-divider i {
 }
 
 header #skills {
-  font-size: 3em;
+  font-size: 3rem;
 }
 
 section {
@@ -173,7 +173,7 @@ section h1 {
 #my-current-interests-chart .ct-label {
   fill: #000;
   font-family: 'Amatic', coursive;
-  font-size: 1.9em;
+  font-size: 1.7rem;
   font-weight: bold;
 }
 #my-current-interests-chart .ct-series-a path {
@@ -218,6 +218,7 @@ section#footer {
 }
 
 footer {
+  font-size: 1rem;
   color: #f5f5dc;
   background-color: #233140;
 }
@@ -291,21 +292,25 @@ a.highlight-dark {
 }
 
 @media (min-width: 768px) {
+  body {
+    font-size: 1.17rem;
+  }
+
   .navbar.fixed-top {
     padding: 1em 0;
   }
 
   .navbar.fixed-top .navbar-brand {
-    font-size: 2em;
+    font-size: 2.3rem;
     transition: font-size 0.3s;
   }
 
   .navbar.fixed-top.navbar-shrink .navbar-brand {
-    font-size: 1.5em;
+    font-size: 1.7rem;
   }
 
   header {
-    padding-top: 9em;
+    padding-top: 9rem;
   }
   header #name {
     font-size: 6rem;
