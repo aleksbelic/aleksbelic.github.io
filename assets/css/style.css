@@ -1,3 +1,7 @@
+:root {
+  --my-turquoise: #2aa5a5;
+}
+
 @font-face {
   font-family: 'Amatic';
   src: url('/assets/font/AmaticSC-Regular.ttf');
@@ -11,6 +15,43 @@
 }
 .handwritten-font {
   font-family: 'Amatic', coursive;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+  background: #fff;
+}
+::-webkit-scrollbar:horizontal {
+  height: 12px;
+}
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0px 0px 6px rgba(0, 0, 0, 0.3);
+  background: #f4f4f4;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--my-turquoise);
+  background-image: -webkit-linear-gradient(
+    25deg,
+    rgba(255, 255, 255, 0.5) 10%,
+    transparent 10%,
+    transparent 20%,
+    rgba(255, 255, 255, 0.5) 20%,
+    rgba(255, 255, 255, 0.5) 30%,
+    transparent 30%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.5) 40%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 50%,
+    transparent 60%,
+    rgba(255, 255, 255, 0.5) 60%,
+    rgba(255, 255, 255, 0.5) 70%,
+    transparent 70%,
+    transparent 80%,
+    rgba(255, 255, 255, 0.5) 80%,
+    rgba(255, 255, 255, 0.5) 90%,
+    transparent 90%
+  );
 }
 
 body {
@@ -98,7 +139,7 @@ header {
 header,
 #portfolio {
   color: #f5f5dc;
-  background-color: #2aa5a5;
+  background-color: var(--my-turquoise);
 }
 header img#profile-pic {
   border-radius: 50%;
@@ -203,7 +244,7 @@ section h1 {
 #contact #email {
   pointer-events: none;
   font-weight: bold;
-  color: #2aa5a5;
+  color: var(--my-turquoise);
   max-width: fit-content;
   text-align: center;
   transition: color 0.15s ease-out, background-color 0.15s ease-out;
