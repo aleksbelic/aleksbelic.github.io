@@ -105,8 +105,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let myCurrentInterestsChartObj = new Chartist.Pie(
     '#my-current-interests-chart',
     {
-      series: [30, 20, 20, 10, 10, 10],
-      labels: ['Test automation', 'Node.js', 'SPA', 'Android', 'DLT', 'ML'],
+      series: [40, 30, 20, 10],
+      labels: ['Test automation', 'Node.js/Bun', 'Android', 'ML'],
     },
     {
       donut: true,
