@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
     '#my-current-interests-chart',
     {
       series: [40, 30, 20, 10],
-      labels: ['Test automation', 'Node.js/Bun', 'Android', 'ML'],
+      labels: ['Test automation', 'Node.js', 'Python', 'ML'],
     },
     {
       donut: true,
