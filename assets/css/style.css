@@ -213,18 +213,21 @@ section h1 {
 /* Personal interests chart */
 #my-current-interests-chart .ct-label {
   fill: #000;
-  font-family: 'Amatic', coursive;
-  font-size: 1.7rem;
-  font-weight: bold;
+  font-family: 'Amatic', cursive;
+  font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+  font-weight: bolder;
 }
-#my-current-interests-chart .ct-series-a path {
-  stroke: dimgray;
+#my-current-interests-chart .ct-series-a .ct-slice-pie {
+  fill: #98FF98;
 }
-#my-current-interests-chart .ct-series-b path {
-  stroke: #f05b4f;
+#my-current-interests-chart .ct-series-b .ct-slice-pie {
+  fill: #e7b189;
 }
-#my-current-interests-chart .ct-series-c path {
-  stroke: #f4c63d;
+#my-current-interests-chart .ct-series-c .ct-slice-pie {
+  fill: #72D6FF;
+}
+#my-current-interests-chart .ct-series-d .ct-slice-pie {
+  fill: #e58ad7;
 }
 
 #contact a {
