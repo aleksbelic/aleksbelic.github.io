@@ -1,3 +1,21 @@
+/* ============ LOCAL FONTS (Fira Code) ============ */
+@font-face {
+  font-family: 'Fira Code';
+  src: url('../fonts/fira-code/static/FiraCode-Regular.woff2') format('woff2'),
+       url('../fonts/fira-code/static/FiraCode-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Fira Code';
+  src: url('../fonts/fira-code/static/FiraCode-Bold.woff2') format('woff2'),
+       url('../fonts/fira-code/static/FiraCode-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --neon: #00ff41;
   --neon-dim: #00cc33;
