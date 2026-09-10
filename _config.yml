@@ -1,12 +1,9 @@
 email: aleks.belic@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Aleksandar Belic's Webisite
+  Aleksandar Belic Aleksanchez website
 baseurl: '' # the subpath of your site, e.g. /blog
 url: '' # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: aleksbelic
-github_username: aleksbelic
-skills: 'Software Developer & Test Automation Specialist'
-blog_url: https://abelic.blogspot.com
+skills: 'Software Development Engineer in Test'
 
 # Build settings
 #theme: minima

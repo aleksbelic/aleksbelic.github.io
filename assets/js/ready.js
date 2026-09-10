@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // highlight observer
   const highlightObserver = new IntersectionObserver(highlightObserverCallback);
   const highlightedElemements = document.querySelectorAll(
-    '.highlight-pink, .highlight-dark'
+    '.highlight-green, .highlight-blue'
   );
   highlightedElemements.forEach((element) => {
     highlightObserver.observe(element);
@@ -24,6 +24,22 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // reveal on scroll observer
+  const revealObserver = new IntersectionObserver(
+    (elements) => {
+      elements.forEach((element) => {
+        if (element.isIntersecting) {
+          element.target.classList.add('visible');
+          revealObserver.unobserve(element.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+  document.querySelectorAll('.reveal').forEach((el) => {
+    revealObserver.observe(el);
+  });
 
   // copy email to clipboard
   document.getElementById('email').value = uncryptMailto(
@@ -100,20 +116,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
-
-  // my current interests chart
-  let myCurrentInterestsChartObj = new Chartist.Pie(
-    '#my-current-interests-chart',
-    {
-      series: [40, 30, 20, 10],
-      labels: ['Test automation', 'Node.js', 'Python', 'AI'],
-    },
-    {
-      donut: false,
-      showLabel: true,
-      startAngle: 216,
-    }
-  );
 
   // lil fucker
   let consoleNoseyLilFuckerStyle1 =
