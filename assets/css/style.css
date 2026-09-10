@@ -336,6 +336,7 @@ section:not(header):not(#footer):not(#contact)::before {
 .git-commit {
   position: relative;
   padding: 0.8rem 0 0.8rem 1.5rem;
+  text-align: left;
 }
 .commit-dot {
   position: absolute;
@@ -376,8 +377,9 @@ section:not(header):not(#footer):not(#contact)::before {
 }
 .commit-date {
   font-family: 'Fira Code', monospace;
-  font-size: 0.8rem;
-  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--cyan);
 }
 .commit-msg {
   font-family: 'Fira Code', monospace;
@@ -387,9 +389,12 @@ section:not(header):not(#footer):not(#contact)::before {
   margin-bottom: 0.3rem;
 }
 .commit-body {
-  font-size: 0.95rem;
   color: var(--text-muted);
   line-height: 1.5;
+}
+.commit-sub {
+  display: block;
+  padding-left: 1.5rem;
 }
 
 /* ============ CONTACT ============ */
