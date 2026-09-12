@@ -11,11 +11,18 @@
   const STAIN_SIZE = 37; // rendered px size
   const STAIN_VISIBLE_MS = 2500; // how long the stain stays before fading
   const STAIN_FADE_MS = 700;
+  const BASE_FRAME_MS = 1000 / 60; // reference frame length; all motion is scaled relative to this
+  const MAX_DT = 4; // clamp so resuming from a hidden/throttled tab doesn't cause a big jump
+  // Tune these if the bug ever overlaps a fixed navbar or modal on your site —
+  // it's deliberately high so it stays clickable everywhere it wanders.
+  const BUG_Z_INDEX = 9998;
+  const STAIN_Z_INDEX = 9997;
 
   function init() {
     const bug = document.createElement('img');
     bug.src = BUG_NORMAL_SRC;
-    bug.alt = 'bug';
+    bug.alt = '';
+    bug.setAttribute('aria-hidden', 'true');
     bug.draggable = false; // stop native image drag interfering with clicks
     bug.style.cssText = `
       position: fixed;
@@ -23,7 +30,7 @@
       left: 0;
       width: ${BUG_SIZE}px;
       height: ${BUG_SIZE}px;
-      z-index: 9998;
+      z-index: ${BUG_Z_INDEX};
       pointer-events: auto; /* Enable clicking */
       opacity: 0.6;
       filter: grayscale(0.3);
@@ -36,6 +43,8 @@
     `;
     document.body.appendChild(bug);
 
+    const widgetId = Math.random().toString(36).slice(2, 9); // avoids id collisions with other elements on the page
+
     // --- Stain: a rounded 5-7 point star (smoothed, no sharp tips) + 2-4 dots ---
     const stain = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     stain.setAttribute('viewBox', '0 0 44 44');
@@ -45,31 +54,40 @@
       position: fixed;
       top: 0;
       left: 0;
-      z-index: 9997; /* just beneath the bug */
+      z-index: ${STAIN_Z_INDEX}; /* just beneath the bug */
       pointer-events: none;
       opacity: 0;
       overflow: visible;
+      transform-origin: center center;
       transform: translate3d(-9999px, -9999px, 0);
       transition: opacity ${STAIN_FADE_MS}ms ease;
     `;
     stain.innerHTML = `
       <defs>
-        <radialGradient id="stainGrad" cx="40%" cy="35%" r="70%">
+        <radialGradient id="stainGrad-${widgetId}" cx="40%" cy="35%" r="70%">
           <stop offset="0%" stop-color="#8FCE9E"/>
           <stop offset="55%" stop-color="#4C8F5A"/>
           <stop offset="100%" stop-color="#2E5E38"/>
         </radialGradient>
       </defs>
-      <path id="stainBlob" fill="url(#stainGrad)" d=""/>
-      <circle id="stainDot0" fill="url(#stainGrad)" cx="0" cy="0" r="1"/>
-      <circle id="stainDot1" fill="url(#stainGrad)" cx="0" cy="0" r="1"/>
-      <circle id="stainDot2" fill="url(#stainGrad)" cx="0" cy="0" r="1"/>
-      <circle id="stainDot3" fill="url(#stainGrad)" cx="0" cy="0" r="1"/>
+      <path id="stainBlob-${widgetId}" fill="url(#stainGrad-${widgetId})" d=""/>
+      <circle id="stainDot0-${widgetId}" fill="url(#stainGrad-${widgetId})" cx="0" cy="0" r="1"/>
+      <circle id="stainDot1-${widgetId}" fill="url(#stainGrad-${widgetId})" cx="0" cy="0" r="1"/>
+      <circle id="stainDot2-${widgetId}" fill="url(#stainGrad-${widgetId})" cx="0" cy="0" r="1"/>
+      <circle id="stainDot3-${widgetId}" fill="url(#stainGrad-${widgetId})" cx="0" cy="0" r="1"/>
     `;
     document.body.appendChild(stain);
 
-    const blobPath = stain.querySelector('#stainBlob');
-    const dots = [0, 1, 2, 3].map((i) => stain.querySelector(`#stainDot${i}`));
+    // If the asset is missing, don't leave a broken-image icon crawling the page
+    bug.addEventListener('error', () => {
+      destroyed = true;
+      running = false;
+      bug.remove();
+      stain.remove();
+    });
+
+    const blobPath = stain.querySelector(`#stainBlob-${widgetId}`);
+    const dots = [0, 1, 2, 3].map((i) => stain.querySelector(`#stainDot${i}-${widgetId}`));
 
     let stainTimer = null;
     const CX = 22, CY = 22;
@@ -136,7 +154,10 @@
     let isSquished = false;
     let mouseX = -1000;
     let mouseY = -1000;
+    let wasFleeing = false; // tracks flee state so speed resets reliably when it ends
     let running = true; // controls whether the rAF loop is active
+    let destroyed = false; // true once the widget has been torn down (e.g. missing asset)
+    let lastTimestamp = null; // used to compute delta time between frames
 
     window.addEventListener('resize', () => {
       boundsX = Math.max(0, window.innerWidth - BUG_SIZE);
@@ -150,23 +171,48 @@
       mouseY = e.clientY;
     }, { passive: true });
 
-    document.addEventListener('mouseleave', () => {
+    // relatedTarget is null only when the pointer has left the browser
+    // window entirely (as opposed to moving between elements inside it),
+    // which is a more reliable signal than document-level mouseleave.
+    document.addEventListener('mouseout', (e) => {
+      if (!e.relatedTarget) {
+        mouseX = -1000;
+        mouseY = -1000;
+      }
+    }, { passive: true });
+
+    document.addEventListener('touchmove', (e) => {
+      const touch = e.touches[0];
+      if (touch) {
+        mouseX = touch.clientX;
+        mouseY = touch.clientY;
+      }
+    }, { passive: true });
+
+    document.addEventListener('touchend', () => {
+      mouseX = -1000;
+      mouseY = -1000;
+    }, { passive: true });
+
+    document.addEventListener('touchcancel', () => {
       mouseX = -1000;
       mouseY = -1000;
     }, { passive: true });
 
     // Pause the animation loop when the tab isn't visible (saves CPU/battery)
     document.addEventListener('visibilitychange', () => {
+      if (destroyed) return;
       if (document.hidden) {
         running = false;
       } else if (!running) {
         running = true;
+        lastTimestamp = null; // avoid a huge delta on the first frame back
         requestAnimationFrame(move);
       }
     });
 
     const pickSpeed = () => Math.random() * 1.2 + 0.4;
-    const pickPause = () => Math.floor(Math.random() * 100 + 40);
+    const pickPause = () => Math.random() * 1700 + 650; // ms, ~same feel as the old 40-140 frame range
 
     // Squish Event Handler
     bug.addEventListener('click', (e) => {
@@ -198,11 +244,13 @@
       stain.style.transition = `opacity ${STAIN_FADE_MS}ms ease`;
 
       stainTimer = setTimeout(() => {
+        if (destroyed) return;
         stain.style.opacity = '0';
       }, STAIN_VISIBLE_MS);
 
       // Respawn only once the stain has fully faded out
       setTimeout(() => {
+        if (destroyed) return;
         respawn();
       }, STAIN_VISIBLE_MS + STAIN_FADE_MS);
     });
@@ -220,8 +268,19 @@
       bug.style.opacity = '0.6';
     }
 
-    function move() {
+    function move(timestamp) {
       if (!running) return; // rAF loop stopped while tab hidden
+
+      // Elapsed time since the last frame, expressed as a multiple of one
+      // "standard" 60fps frame. dt === 1 at 60fps, ~0.5 at 120fps, ~2 at 30fps,
+      // so motion speed no longer depends on the display's refresh rate.
+      let dt = 1;
+      let deltaMs = BASE_FRAME_MS;
+      if (lastTimestamp !== null) {
+        deltaMs = timestamp - lastTimestamp;
+        dt = Math.min(deltaMs / BASE_FRAME_MS, MAX_DT);
+      }
+      lastTimestamp = timestamp;
 
       // Stop moving if bug is squished
       if (isSquished) {
@@ -230,7 +289,8 @@
       }
 
       if (paused) {
-        if (--pauseTimer <= 0) {
+        pauseTimer -= deltaMs;
+        if (pauseTimer <= 0) {
           paused = false;
           speed = pickSpeed();
         }
@@ -245,18 +305,20 @@
       const dy = bugCy - mouseY;
       const distSq = dx * dx + dy * dy;
 
-      if (distSq < FLEE_RADIUS_SQ) {
+      const isFleeingNow = distSq < FLEE_RADIUS_SQ;
+      if (isFleeingNow) {
         const fleeAngle = Math.atan2(dy, dx);
         angle = fleeAngle + (Math.random() - 0.5) * 0.5;
         speed = pickSpeed() * 2;
-      } else if (speed > 1.6) {
-        // Not fleeing anymore — ease back down to normal cruising speed
-        // instead of staying boosted until a wall bounce happens to reset it.
+      } else if (wasFleeing) {
+        // Just stopped fleeing this frame — reset to normal cruising speed
+        // regardless of what value the boosted speed happened to land on.
         speed = pickSpeed();
       }
+      wasFleeing = isFleeingNow;
 
-      x += Math.cos(angle) * speed;
-      y += Math.sin(angle) * speed;
+      x += Math.cos(angle) * speed * dt;
+      y += Math.sin(angle) * speed * dt;
 
       let bounced = false;
 
@@ -271,9 +333,13 @@
       const deg = (angle * 180 / Math.PI) + 90;
       bug.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${deg}deg)`;
 
-      if (Math.random() < 0.01) angle += (Math.random() - 0.5) * 1.2;
-      if (Math.random() < 0.008) speed = pickSpeed() * 0.3;
-      if (Math.random() < 0.003) {
+      // Probabilities are scaled by dt so they land at roughly the same
+      // rate per second regardless of frame rate (e.g. a 0.01/frame chance
+      // at 60fps becomes proportionally smaller per-frame at 120fps, but
+      // the same per-second chance).
+      if (Math.random() < 0.01 * dt) angle += (Math.random() - 0.5) * 1.2;
+      if (Math.random() < 0.008 * dt) speed = pickSpeed() * 0.3;
+      if (Math.random() < 0.003 * dt) {
         paused = true;
         pauseTimer = pickPause();
       }
@@ -282,12 +348,20 @@
     }
 
     speed = pickSpeed();
-    move();
+    requestAnimationFrame(move);
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
+  const prefersReducedMotion = () =>
+    !!window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!prefersReducedMotion()) {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
   }
+  // If reduced motion is preferred, the widget is simply not injected —
+  // it's decorative and non-essential, so this is the correct fix rather
+  // than trying to build a "reduced" version of a wandering animation.
 })();
