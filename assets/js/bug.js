@@ -141,6 +141,8 @@
     window.addEventListener('resize', () => {
       boundsX = Math.max(0, window.innerWidth - BUG_SIZE);
       boundsY = Math.max(0, window.innerHeight - BUG_SIZE);
+      x = Math.min(x, boundsX);
+      y = Math.min(y, boundsY);
     }, { passive: true });
 
     document.addEventListener('mousemove', (e) => {
@@ -172,6 +174,7 @@
       e.stopPropagation();
 
       isSquished = true;
+      bug.style.pointerEvents = 'none'; // stop the invisible bug from blocking clicks
 
       // Hide the bug instantly, no squish/fade animation
       bug.style.transition = 'none';
@@ -211,6 +214,7 @@
       speed = pickSpeed();
       paused = false;
       isSquished = false;
+      bug.style.pointerEvents = 'auto'; // re-enable clicking on the respawned bug
       bug.src = BUG_NORMAL_SRC;
       bug.style.transition = 'opacity 0.5s ease';
       bug.style.opacity = '0.6';
@@ -245,6 +249,10 @@
         const fleeAngle = Math.atan2(dy, dx);
         angle = fleeAngle + (Math.random() - 0.5) * 0.5;
         speed = pickSpeed() * 2;
+      } else if (speed > 1.6) {
+        // Not fleeing anymore — ease back down to normal cruising speed
+        // instead of staying boosted until a wall bounce happens to reset it.
+        speed = pickSpeed();
       }
 
       x += Math.cos(angle) * speed;
